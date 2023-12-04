@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Adventures</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .login-container, .profile-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            max-width: 100%;
+            transition: box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .login-header, .profile-header, .profile-name, .profile-coins {
+            color: #fff;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .login-button, .change-name-button, .youtube-button, .discord-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #3498db;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .login-button:hover, .change-name-button:hover, .youtube-button:hover, .discord-button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-container:hover, .login-container:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-container {
+            display: none;
+        }
+    </style>
+</head>
+<body onclick="showTouchEffect()">
+
+<div class="login-container" id="login-container">
+    <div class="login-header">Block Adventures Teste</div>
+    <form>
+        <input type="text" class="login-input" id="login-username" placeholder="Nome de usuário" required>
+        <input type="password" class="login-input" id="login-password" placeholder="Senha" required>
+        <button type="button" class="login-button" onclick="attemptLogin()">Entrar</button>
+    </form>
+</div>
+
+<div class="profile-container" id="profile-container">
+    <div class="profile-header">Perfil</div>
+    <div class="profile-name" id="profile-name">Tkzin</div>
+    <div class="profile-coins" id="profile-coins">Moedas: 9999999</div>
+    <div class="color-picker">
+        Escolha a cor do nome:
+        <input type="color" id="name-color" onchange="changeNameColor()">
+    </div>
+    <div class="profile-buttons">
+        <button class="change-name-button" onclick="changeUserName()">Trocar Nome</button>
+        <a href="https://youtube.com/@Tkzin-BG1?si=l_liQsipqd64ydb2" target="_blank" class="youtube-button">YouTube</a>
+        <a href="https://discord.com/invite/Cy4tTUPqj3" target="_blank" class="discord-button">Discord</a>
+    </div>
+</div>
+
+<script>
+    var accounts = [
+        { username: 'Tkzin', password: 'tkzin99', coins: 9999999, nameColor: '#fff' }
+    ];
+    var currentUser = null;
+
+    function attemptLogin() {
+        var loginUsername = document.getElementById('login-username').value;
+        var loginPassword = document.getElementById('login-password').value;
+
+        // Simulação de lógica de login
+        var userExists = accounts.find(function(account) {
+            return account.username === loginUsername && account.password === loginPassword;
+        });
+
+        if (userExists) {
+            currentUser = userExists;
+            showProfile();
+        }
+    }
+
+    function showProfile() {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('profile-container').style.display = 'block';
+        document.getElementById('profile-name').textContent = currentUser.username;
+        document.getElementById('profile-coins').textContent = 'Moedas: ' + currentUser.coins;
+        document.getElementById('name-color').value = currentUser.nameColor;
+        document.getElementById('profile-name').style.color = currentUser.nameColor;
+    }
+
+    function changeNameColor() {
+        var colorPicker = document.getElementById('name-color');
+        var newColor = colorPicker.value;
+        document.getElementById('profile-name').style.color = newColor;
+        currentUser.nameColor = newColor;
+    }
+
+    function changeUserName() {
+        var newUserName = prompt('Digite o novo nome de usuário:');
+        if (newUserName) {
+            currentUser.username = newUserName;
+            document.getElementById('profile-name').textContent = newUserName;
+        }
+    }
+
+    function showTouchEffect() {
+        var touchEffect = document.createElement("div");
+        touchEffect.classList.add("touch-effect");
+        document.body.appendChild(touchEffect);
+
+        setTimeout(function() {
+            document.body.removeChild(touchEffect);
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
